@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 160 25% 8%;
+    --foreground: 40 30% 85%;
+    --card: 160 20% 12%;
+    --card-foreground: 40 30% 85%;
+    --primary: 40 50% 55%;
+    --primary-foreground: 160 25% 8%;
+    --muted: 160 15% 15%;
+    --muted-foreground: 40 15% 55%;
+    --border: 40 25% 22%;
+    --radius: 0.75rem;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  html,
+  body,
+  #root {
+    min-height: 100vh;
+    background-color: hsl(160 25% 8%);
+  }
+
+  body {
+    font-family: 'Cinzel', serif;
+    color: hsl(var(--foreground));
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+@layer utilities {
+  .font-cinzel {
+    font-family: 'Cinzel', serif;
+  }
+
+  .font-calligraphy {
+    font-family: 'Dancing Script', cursive;
+  }
+
+  .font-calligraphic {
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  .shadow-elegant {
+    box-shadow: 0 25px 55px -20px rgba(201, 163, 85, 0.35);
+  }
+
+  .shadow-gold {
+    box-shadow: 0 8px 32px rgba(201, 169, 110, 0.25);
+  }
+
+  .gold-text {
+    color: hsl(40 50% 55%);
+  }
+}
