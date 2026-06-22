@@ -19,6 +19,8 @@ const invitationData = {
     { title: 'Reception of Guests', time: 'Aug 01, 2026, 7:00 PM' },
     { title: 'Dinner', time: 'Aug 01, 2026, 8:00 PM' },
   ],
+  welcomeMessage:
+    'Mrs. Shahid Ali & sons warmly welcome you to the Walima ceremony of Hassan Ali & Nimra Amin. As they begin their journey together in faith and love, we thank you for being part of their blessed occasion',
 }
 
 function InvitationPage() {

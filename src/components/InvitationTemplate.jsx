@@ -213,6 +213,101 @@ function AnimatedSection({ children, className = '' }) {
   )
 }
 
+function WaveBorder({ className = '' }) {
+  const dots = [50, 100, 150, 200, 250, 300, 350]
+
+  return (
+    <svg
+      viewBox="0 0 400 40"
+      className={`w-full text-primary ${className}`}
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      preserveAspectRatio="none"
+    >
+      <path
+        d="M0 20 Q50 5 100 20 Q150 35 200 20 Q250 5 300 20 Q350 35 400 20"
+        stroke="currentColor"
+        strokeWidth="1"
+        opacity="0.3"
+      />
+      <path
+        d="M0 20 Q50 10 100 20 Q150 30 200 20 Q250 10 300 20 Q350 30 400 20"
+        stroke="currentColor"
+        strokeWidth="0.5"
+        opacity="0.2"
+      />
+      {dots.map((x) => (
+        <circle
+          key={x}
+          cx={x}
+          cy={20 + Math.sin(x * 0.03) * 8}
+          r="2"
+          fill="currentColor"
+          opacity="0.25"
+        />
+      ))}
+    </svg>
+  )
+}
+
+function WelcomeSection({ message }) {
+  const container = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.18, delayChildren: 0.1 },
+    },
+  }
+
+  const item = {
+    hidden: { opacity: 0, y: 24 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.9, ease: [0.25, 0.1, 0.25, 1] },
+    },
+  }
+
+  const line = {
+    hidden: { opacity: 0, scaleX: 0 },
+    visible: {
+      opacity: 1,
+      scaleX: 1,
+      transition: { duration: 1.1, ease: [0.25, 0.1, 0.25, 1] },
+    },
+  }
+
+  return (
+    <AnimatedSection>
+      <motion.div
+        className="max-w-lg mx-auto text-center"
+        variants={container}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.35 }}
+      >
+        <motion.div variants={line} className="origin-center mb-8 md:mb-10">
+          <WaveBorder />
+        </motion.div>
+
+        <motion.p
+          variants={item}
+          className="font-calligraphic text-lg md:text-2xl text-foreground leading-relaxed italic whitespace-pre-wrap break-words px-2"
+        >
+          {message}
+        </motion.p>
+
+        <motion.div
+          variants={line}
+          className="origin-center mt-8 md:mt-10 rotate-180"
+        >
+          <WaveBorder />
+        </motion.div>
+      </motion.div>
+    </AnimatedSection>
+  )
+}
+
 const DEFAULT_MUSIC_URL = './music/track1.mp3'
 
 function InvitationTemplate({ data }) {
@@ -348,7 +443,7 @@ function InvitationTemplate({ data }) {
           </motion.p>
 
           <motion.h1
-            className="font-cinzel text-4xl md:text-6xl font-light tracking-[0.1em] mb-3"
+            className="font-cinzel text-4xl md:text-6xl font-light tracking-[0.1em] mb-3 uppercase"
             style={{ color: 'hsl(40, 40%, 72%)' }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -357,28 +452,18 @@ function InvitationTemplate({ data }) {
             {data.groomName}
           </motion.h1>
 
-          <motion.div
-            className="flex items-center justify-center gap-6 my-5"
-            initial={{ opacity: 0, scaleX: 0 }}
-            animate={{ opacity: 1, scaleX: 1 }}
+          <motion.p
+            className="font-calligraphic text-sm md:text-base italic tracking-[0.25em] uppercase my-5"
+            style={{ color: 'hsl(40, 35%, 55%)' }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ delay: 1.3, duration: 0.8 }}
           >
-            <div
-              className="w-20 h-px"
-              style={{ background: 'linear-gradient(90deg, transparent, hsl(40, 40%, 50%))' }}
-            />
-            <div
-              className="w-3 h-3 rotate-45 border"
-              style={{ borderColor: 'hsl(40, 40%, 50%)' }}
-            />
-            <div
-              className="w-20 h-px"
-              style={{ background: 'linear-gradient(270deg, transparent, hsl(40, 40%, 50%))' }}
-            />
-          </motion.div>
+            with
+          </motion.p>
 
           <motion.h1
-            className="font-cinzel text-4xl md:text-6xl font-light tracking-[0.1em] mb-10"
+            className="font-cinzel text-4xl md:text-6xl font-light tracking-[0.1em] mb-10 uppercase"
             style={{ color: 'hsl(40, 40%, 72%)' }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -427,6 +512,11 @@ function InvitationTemplate({ data }) {
           <ChevronDown size={16} style={{ color: 'hsl(40, 30%, 50%)' }} />
         </motion.div>
       </motion.section>
+
+      {/* Welcome Message */}
+      {data.welcomeMessage && (
+        <WelcomeSection message={data.welcomeMessage} />
+      )}
 
       {/* Scratch to Reveal */}
       <AnimatedSection>
